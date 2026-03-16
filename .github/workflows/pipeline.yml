@@ -1,0 +1,52 @@
+name: GitOps-Automatic-Flow-Windows
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  sincronizzazione-layer:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout del codice
+        uses: actions/checkout@v3
+
+      - name: Debug - Elenco File
+        run: |
+          echo "Ecco i file presenti nel repository:"
+          dir
+          echo "------------------------------------"
+
+      - name: Leggi il Manifest
+        shell: pwsh
+        run: |
+          $filePath = Join-Path $env:GITHUB_WORKSPACE "./L1/manifest.txt"
+        
+          if (Test-Path $filePath) {
+              Write-Host "File trovato! Contenuto:" -ForegroundColor Green
+              Get-Content $filePath
+          } else {
+              Write-Error "ERRORE: Il file manifest.txt non esiste in questa posizione: $filePath"
+              exit 1
+          }
+          
+          $filePath2 = Join-Path $env:GITHUB_WORKSPACE "./L2/manifest.txt"
+        
+          if (Test-Path $filePath2) {
+              Write-Host "File trovato! Contenuto:" -ForegroundColor Green
+              Get-Content $filePath2
+          } else {
+              Write-Error "ERRORE: Il file manifest.txt non esiste in questa posizione: $filePath2"
+              exit 1
+          }
+          
+          $filePath3 = Join-Path $env:GITHUB_WORKSPACE "./L3/manifest.txt"
+        
+          if (Test-Path $filePath3) {
+              Write-Host "File trovato! Contenuto:" -ForegroundColor Green
+              Get-Content $filePath3
+          } else {
+              Write-Error "ERRORE: Il file manifest.txt non esiste in questa posizione: $filePath3"
+              exit 1
+          }
+          
